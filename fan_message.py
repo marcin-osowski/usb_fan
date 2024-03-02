@@ -120,7 +120,7 @@ class FanDeviceMessage(object):
     """Decoding is the same as encoding."""
     return FanDeviceMessage._encode_bytes(data)
 
-  def visualize(self) -> str:
+  def visualize(self, max_width=80) -> str:
     result = []
 
     # Add pixels
@@ -142,6 +142,13 @@ class FanDeviceMessage(object):
     result.append("".join(row_R))
     result.append("".join(row_G))
     result.append("".join(row_B))
+
+    for i in range(len(result)):
+      row = result[i]
+      if len(row) > max_width - 2:
+        row = row[:max_width - 2]
+        row += " …"
+        result[i] = row
 
     result = "\n".join(result)
     result = f"Header: {self._generate_header().hex(' ')}\n" + result
