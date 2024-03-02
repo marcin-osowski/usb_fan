@@ -30,6 +30,7 @@ def connect():
   try:
     manufacturer = dev.manufacturer
     product = dev.product
+    dev.set_configuration()
     print("Connected to %s %s" % (manufacturer, product))
   except:
     raise USBFanDeviceError("Failed to get device info. Do you have permission to access the device?")
